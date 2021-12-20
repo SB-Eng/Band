@@ -28,7 +28,8 @@
       update();
       }, 10000);
      setTimeout(function() {
-    elements.remove();
+   for (var i in elements)
+    document.body.removeChild(elements[i]);
       }, 3000);
     });
   }
@@ -89,21 +90,21 @@
         elements.sensorB7.setValue(d)});
   }
   
- //  function homePage() {
- //   elements.tempAve.remove();}
+   function homePage() {
+    elements.tempAve.remove();}
    
- //  function roomsPage() {   }
+   function roomsPage() {   }
    
- //  function pivPage() {   }
+   function pivPage() {   }
    
- //  function bathroomPage() {   }
+   function bathroomPage() {   }
    
    
    // Set up the controls we see on the screen    
   var elements = {
    //Home Page
    
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.04"}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.05"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
    humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
    //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
