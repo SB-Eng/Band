@@ -24,6 +24,7 @@
       //UART.eval("{sensor1 : E.getTemperature()}", function(d) {
         //elements.sensor1.setvalue(d.sensor1);}
      update();
+     
      setInterval(function() {
       update();
       }, 10000);
@@ -32,8 +33,9 @@
     document.body.removeChild(elements[i]);
       }, 3000);
      setTimeout(function() {
+      elements = elements2;
      for (var i in elements)
-    document.body.appendChild(elements1[i]);
+    document.body.appendChild(elements[i]);
        }, 6000);
     });
   }
@@ -105,10 +107,11 @@
    
    
    // Set up the controls we see on the screen    
-  var elements = {
+  var elements;
+   var elements1 = {
    //Home Page
    
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.07"}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.08"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
    humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
    //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
@@ -208,7 +211,8 @@
    sensorB7: TD.value({x:250,y:880,width:115,height:50,label:"Battery %",value:""})
 
   }
-  
+  elements = elements1;
+   
   for (var i in elements)
     document.body.appendChild(elements[i]);
   
