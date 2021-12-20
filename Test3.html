@@ -28,9 +28,8 @@
       update();
       }, 10000);
      setTimeout(function() {
-    elements.elements[1].remove();
-      elements.elements[2].remove();
-      }, 30000);
+    elements.remove();
+      }, 3000);
     });
   }
   
@@ -104,7 +103,7 @@
   var elements = {
    //Home Page
    
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.03"}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.04"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
    humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
    //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
