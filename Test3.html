@@ -125,14 +125,14 @@
    var elementsHome = {
    //Home Page
    
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.09"}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.10"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
    humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
    //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
    
-   rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage()}),
-   pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage()}),
-   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage()}),
+   rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage}),
+   pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage}),
+   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}),
    modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice})
     
    }
