@@ -90,7 +90,8 @@
    function homePage() {
     for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsCommon + elementsHome;
+   elements = elementsCommon;
+    //elements = elementsCommon + elementsHome;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -98,7 +99,8 @@
    function roomsPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsCommon + elementsRooms;
+    elements = elementsCommon;
+   //elements = elementsCommon + elementsRooms;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -106,7 +108,8 @@
    function pivPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsCommon + elementsPiv;
+    elements = elementsCommon;
+   //elements = elementsCommon + elementsPiv;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -114,7 +117,8 @@
    function bathroomPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsCommon + elementsBathroom;
+    elements = elementsCommon;
+   //elements = elementsCommon + elementsBathroom;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -190,7 +194,7 @@
     
    
 
-  elements = elementsHome;
+  elements = elementsCommon;
    
   for (var i in elements)
     document.body.appendChild(elements[i]);
