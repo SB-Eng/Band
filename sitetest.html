@@ -90,8 +90,8 @@
    function homePage() {
     for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsCommon;
-    //elements = elementsCommon + elementsHome;
+   //elements = elementsCommon;
+    elements = elementsCommon + elementsHome;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -99,8 +99,8 @@
    function roomsPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-    elements = elementsCommon;
-   //elements = elementsCommon + elementsRooms;
+   // elements = elementsCommon;
+   elements = elementsCommon + elementsRooms;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -108,8 +108,8 @@
    function pivPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-    elements = elementsCommon;
-   //elements = elementsCommon + elementsPiv;
+   // elements = elementsCommon;
+   elements = elementsCommon + elementsPiv;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -117,8 +117,8 @@
    function bathroomPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-    elements = elementsCommon;
-   //elements = elementsCommon + elementsBathroom;
+    //elements = elementsCommon;
+   elements = elementsCommon + elementsBathroom;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -129,7 +129,7 @@
    
    var elementsCommon = {
  //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice}),
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.11"}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
    humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""})
    }
@@ -138,7 +138,7 @@
    var elementsHome = {
    rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage}),
    pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage}),
-   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}    
+   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage});    
    }
    
    //Rooms
@@ -194,7 +194,7 @@
     
    
 
-  elements = elementsHome;
+  elements = elementsCommon + elementsHome;
    
   for (var i in elements)
     document.body.appendChild(elements[i]);
