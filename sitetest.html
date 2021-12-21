@@ -90,7 +90,7 @@
    function homePage() {
     for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsHome;
+   elements = elementsCommon + elementsHome;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -98,7 +98,7 @@
    function roomsPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsRooms;
+   elements = elementsCommon + elementsRooms;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -106,7 +106,7 @@
    function pivPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsPiv;
+   elements = elementsCommon + elementsPiv;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -114,7 +114,7 @@
    function bathroomPage() {   
        for (var i in elements)
      document.body.removeChild(elements[i]);
-   elements = elementsBathroom;
+   elements = elementsCommon + elementsBathroom;
     for (var i in elements)
      document.body.appendChild(elements[i]);
    }
@@ -122,19 +122,19 @@
    
    // Set up the controls we see on the screen    
   var elements;
-   var elementsHome = {
-   //Home Page
    
-   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.10"}),
+   var elementsCommon = {
+ //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice}),
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.11"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
-   humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
-   //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
-   
+   humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""})
+   }
+ 
+   //Home Page
+   var elementsHome = {
    rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage}),
    pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage}),
-   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}),
-   //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice})
-    
+   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}    
    }
    
    //Rooms
