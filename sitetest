@@ -1,0 +1,200 @@
+<html>
+ <head>
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=420, initial-scale=1">
+ </head>
+ <body style="width:380px;height:450px">
+  <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
+  <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script> 
+  <script>
+  function connectDevice() {
+    // connect, and ask for the battery percentage
+    UART.eval("{tempAve: tempAve}", function(d,err) {
+      if (!d) {
+        alert("Web Bluetooth connection failed!\n"+(err||""));
+        return;
+      }
+      // remove the 'connect' window
+      elements.modal.remove();
+      // update the controls with the values we received
+      //elements.bat.setValue(d.bat);
+      // now get the history - these could take a while
+      // so we do it separately.
+      //UART.eval("{sensor1 : E.getTemperature()}", function(d) {
+        //elements.sensor1.setvalue(d.sensor1);}
+     update();
+     
+     setInterval(function() {
+     update();
+      }, 10000);
+    });
+  }
+  
+  function update() {
+   //UART.eval("tempAve", function(d) {
+        //elements.tempAve.setValue(d)});
+      UART.eval("humidityAve", function(d) {
+        elements.humidityAve.setValue(d)});
+      
+     UART.eval("temp[1]", function(d) {
+        elements.sensorT1.setValue(d)});
+     UART.eval("humidity[1]", function(d) {
+        elements.sensorH1.setValue(d)});
+     UART.eval("battery[1]", function(d) {
+        elements.sensorB1.setValue(d)});
+      
+     UART.eval("temp[2]", function(d) {
+        elements.sensorT2.setValue(d)});
+     UART.eval("humidity[2]", function(d) {
+        elements.sensorH2.setValue(d)});
+     UART.eval("battery[2]", function(d) {
+        elements.sensorB2.setValue(d)});
+      
+     UART.eval("temp[3]", function(d) {
+        elements.sensorT3.setValue(d)});
+     UART.eval("humidity[3]", function(d) {
+        elements.sensorH3.setValue(d)});
+     UART.eval("battery[3]", function(d) {
+        elements.sensorB3.setValue(d)});
+      
+     UART.eval("temp[4]", function(d) {
+        elements.sensorT4.setValue(d)});
+     UART.eval("humidity[4]", function(d) {
+        elements.sensorH4.setValue(d)});
+     UART.eval("battery[4]", function(d) {
+        elements.sensorB4.setValue(d)});
+      
+     UART.eval("temp[5]", function(d) {
+        elements.sensorT5.setValue(d)});
+     UART.eval("humidity[5]", function(d) {
+        elements.sensorH5.setValue(d)});
+     UART.eval("battery[5]", function(d) {
+        elements.sensorB5.setValue(d)});
+      
+     UART.eval("temp[6]", function(d) {
+        elements.sensorT6.setValue(d)});
+     UART.eval("humidity[6]", function(d) {
+        elements.sensorH6.setValue(d)});
+     UART.eval("battery[6]", function(d) {
+        elements.sensorB6.setValue(d)});
+ 
+     UART.eval("temp[7]", function(d) {
+        elements.sensorT7.setValue(d)});
+     UART.eval("humidity[7]", function(d) {
+        elements.sensorH7.setValue(d)});
+     UART.eval("battery[7]", function(d) {
+        elements.sensorB7.setValue(d)});
+  }
+  
+   function homePage() {
+    for (var i in elements)
+     document.body.removeChild(elements[i]);
+   elements = elementsHome;
+    for (var i in elements)
+     document.body.appendChild(elements[i]);
+   }
+   
+   function roomsPage() {   
+       for (var i in elements)
+     document.body.removeChild(elements[i]);
+   elements = elementsRooms;
+    for (var i in elements)
+     document.body.appendChild(elements[i]);
+   }
+   
+   function pivPage() {   
+       for (var i in elements)
+     document.body.removeChild(elements[i]);
+   elements = elementsPiv;
+    for (var i in elements)
+     document.body.appendChild(elements[i]);
+   }
+   
+   function bathroomPage() {   
+       for (var i in elements)
+     document.body.removeChild(elements[i]);
+   elements = elementsBathroom;
+    for (var i in elements)
+     document.body.appendChild(elements[i]);
+   }
+   
+   
+   // Set up the controls we see on the screen    
+  var elements;
+   var elementsHome = {
+   //Home Page
+   
+   heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.10"}),
+   tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
+   humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
+   //bat : TD.gauge({x:190,y:10,width:170,height:220,label:"Battery Level",value:0,min:0,max:100}),
+   
+   rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage}),
+   pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage}),
+   bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}),
+   //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice})
+    
+   }
+   
+   //Rooms
+   var elementsRooms = {
+   heading1 : TD.label({x:10,y:240,width:355,height:35,label:"Loft"}),
+   sensorT1: TD.value({x:10,y:280,width:115,height:50,label:"Temperature",value:""}),
+   sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading2 : TD.label({x:10,y:340,width:355,height:35,label:"Hallway"}),
+   sensorT2: TD.value({x:10,y:380,width:115,height:50,label:"Temperature",value:""}),
+   sensorH2: TD.value({x:130,y:380,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB2: TD.value({x:250,y:380,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading3 : TD.label({x:10,y:440,width:355,height:35,label:"Bathroom"}),
+   sensorT3: TD.value({x:10,y:480,width:115,height:50,label:"Temperature",value:""}),
+   sensorH3: TD.value({x:130,y:480,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB3: TD.value({x:250,y:480,width:115,height:50,label:"Battery %",value:""}),
+
+   heading4 : TD.label({x:10,y:540,width:355,height:35,label:"Main Bedroom"}),
+   sensorT4: TD.value({x:10,y:580,width:115,height:50,label:"Temperature",value:""}),
+   sensorH4: TD.value({x:130,y:580,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB4: TD.value({x:250,y:580,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading5 : TD.label({x:10,y:640,width:355,height:35,label:"Kid's Room"}),
+   sensorT5: TD.value({x:10,y:680,width:115,height:50,label:"Temperature",value:""}),
+   sensorH5: TD.value({x:130,y:680,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB5: TD.value({x:250,y:680,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading6 : TD.label({x:10,y:740,width:355,height:35,label:"Kitchen"}),
+   sensorT6: TD.value({x:10,y:780,width:115,height:50,label:"Temperature",value:""}),
+   sensorH6: TD.value({x:130,y:780,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB6: TD.value({x:250,y:780,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading7 : TD.label({x:10,y:840,width:355,height:35,label:"Jayden's Room"}),
+   sensorT7: TD.value({x:10,y:880,width:115,height:50,label:"Temperature",value:""}),
+   sensorH7: TD.value({x:130,y:880,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB7: TD.value({x:250,y:880,width:115,height:50,label:"Battery %",value:""})
+   }
+ 
+   //PIV Control
+   
+   var elementsPiv = {
+    
+   }
+   
+   //Bathroom Fan
+   
+   var elementsBathroom = {
+    
+   }
+   
+    
+   
+
+  elements = elementsHome;
+   
+  for (var i in elements)
+    document.body.appendChild(elements[i]);
+  
+  </script>
+ </body>
+</html>
