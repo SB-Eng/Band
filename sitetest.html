@@ -24,8 +24,8 @@
   }
   
   function updatePiv() {
-  UART.eval("speedSet", function(t) {pivSpeed = t;});
-   UART.eval("pivManual", function(t) {
+  UART.eval("speedSet\n", function(t) {pivSpeed = t;});
+   UART.eval("pivManual\n", function(t) {
       pivMan = t;});
   elementsPiv.pivSetspeed.setValue(pivSpeed);
   elementsPiv.pivManual.setValue(pivMan);    
@@ -136,7 +136,7 @@
    
    function pivPage() {  
  clearHome();
- pivUpdate = setTimeout (function () {
+ pivUpdate = setInterval (function () {
      updatePiv();     
       },1000);
 
@@ -164,7 +164,7 @@
    UART.eval("pivManual", function(t) {
       pivMan = t;});
         elementsPiv.pivSetspeed.setValue(pivSpeed);
-  elementsPiv.pivManual.setValue(pivMan);  
+  //elementsPiv.pivManual.setValue(pivMan);  
    }
    
    var page;
