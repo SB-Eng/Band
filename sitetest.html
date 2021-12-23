@@ -160,12 +160,13 @@
    UART.write("pivManual = !pivManual;\n");
    
    UART.eval("pivManual", function(t) {
-      pivManual = t;});
-   elementsPiv.sensorH1.setValue(pivManual);
+      pivMan = t;});
+      setTimeout (function () {
+   elementsPiv.sensorH1.setValue(pivMan);},1000);
    }
    
    var page;
-   //var pivManual;
+   var pivMan;
    var elements = {
  //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice}),
    heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
@@ -252,3 +253,4 @@
   </script>
  </body>
 </html>
+
