@@ -9,18 +9,17 @@
   <script src="https://www.espruino.com/js/uart.js"></script> 
   <script>
   function connectDevice() {
-    UART.eval("{tempAve : tempAve}", function(d,err) {
+    UART.eval("{tempAve : tempAve\n}", function(d,err) {
       if (!d) {
         alert("Web Bluetooth connection failed!\n"+(err||""));
         return;
       }
-      UART.eval("pivManual", function(t) {pivMan = t;});
+      UART.eval("pivManual\n", function(t) {pivMan = t;});
    //   UART.eval("speedSet", function(t) {pivSpeed = t;});
       elements.modal.remove();
       elements.tempAve.setValue(d.tempAve);
-     setInterval(function() {
-     //update();
-      }, 10000);
+       UART.eval("humidityAve\n", function(d) {
+        elements.humidityAve.setValue(d)});
     });
   }
   
@@ -30,10 +29,10 @@
   }
   
   function updateRooms() {
-   //UART.eval("tempAve", function(d) {
-   //     elements.tempAve.setValue(d)});
-   //   UART.eval("humidityAve", function(d) {
-   //     elements.humidityAve.setValue(d)});
+   UART.eval("tempAve\n", function(d) {
+        elements.tempAve.setValue(d)});
+      UART.eval("humidityAve\n", function(d) {
+        elements.humidityAve.setValue(d)});
       
      UART.eval("temp[1]\n", function(d) {
         elementsRooms.sensorT1.setValue(d)});
@@ -91,6 +90,7 @@
    }
 
     function clearRooms() {
+    clearInterval(roomsUpdate);
      for (var i in elementsRooms)
        document.body.removeChild(elementsRooms[i]);
     homePage();
@@ -122,12 +122,12 @@
    
  function roomsPage() {   
  clearHome();
-   updateRooms();
    for (var i in elementsRooms)
      document.body.appendChild(elementsRooms[i]);
-   setInterval(function() {
+   roomsUpdate = setInterval(function() {
      updateRooms();
       }, 10000); 
+      updateRooms();
    }
    
    function pivPage() {  
@@ -165,7 +165,8 @@
    var page;
    var pivMan;
    var pivSpeed;
-   var elements = {
+  
+  var elements = {
  
    heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
@@ -254,4 +255,5 @@ for (var i in elements)
   </script>
  </body>
 </html>
+
 
