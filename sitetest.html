@@ -149,6 +149,10 @@
    
    // Set up the controls we see on the screen    
    
+   function pivState() {
+   UART.write("pivManual = !pivManual;\n");
+   UART.eval("pivManual", function(d) {elementsPiv.pivManual.setValue(d)});
+   }
    var page;
    
    var elements = {
@@ -210,6 +214,10 @@
    
    var elementsPiv = {
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
+   heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
+   pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:0,onchange:pivState}),
+   sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
    }
    
    //Bathroom Fan
