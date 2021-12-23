@@ -24,8 +24,11 @@
   }
   
   function updatePiv() {
+  UART.eval("speedSet", function(t) {pivSpeed = t;});
+   UART.eval("pivManual", function(t) {
+      pivMan = t;});
+  elementsPiv.pivSetspeed.setValue(pivSpeed);
   elementsPiv.pivManual.setValue(pivMan);    
- //  elementsPiv.sensorH1.setValue(pivMan);
   }
   
   function updateRooms() {
@@ -97,6 +100,7 @@
    }
  
  function clearPiv() {
+ clearInterval(pivUpdate);
      for (var i in elementsPiv)
        document.body.removeChild(elementsPiv[i]);
     homePage();
@@ -132,7 +136,10 @@
    
    function pivPage() {  
  clearHome();
- updatePiv();
+ pivUpdate = setTimeout (function () {
+     updatePiv();     
+      },1000);
+
    for (var i in elementsPiv)
      document.body.appendChild(elementsPiv[i]);
    }
@@ -156,10 +163,8 @@
    UART.eval("speedSet", function(t) {pivSpeed = t;});
    UART.eval("pivManual", function(t) {
       pivMan = t;});
-      setTimeout (function () {
-     elementsPiv.pivSetspeed.setValue(pivSpeed);
-      elementsPiv.pivManual.setValue(pivMan);    
-   elementsPiv.sensorH1.setValue(pivMan);},1000);
+        elementsPiv.pivSetspeed.setValue(pivSpeed);
+  elementsPiv.pivManual.setValue(pivMan);  
    }
    
    var page;
@@ -255,5 +260,6 @@ for (var i in elements)
   </script>
  </body>
 </html>
+
 
 
