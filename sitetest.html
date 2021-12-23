@@ -9,22 +9,14 @@
   <script src="https://www.espruino.com/js/uart.js"></script> 
   <script>
   function connectDevice() {
-    // connect, and ask for the battery percentage
-    UART.eval("{tempAve: tempAve}", function(d,err) {
+    UART.eval("{tempAve : tempAve}", function(d,err) {
       if (!d) {
         alert("Web Bluetooth connection failed!\n"+(err||""));
         return;
       }
-      // remove the 'connect' window
+      UART.eval("pivManual", function(t) {pivMan = t;});
       elements.modal.remove();
-      // update the controls with the values we received
-      //elements.bat.setValue(d.bat);
-      // now get the history - these could take a while
-      // so we do it separately.
-      //UART.eval("{sensor1 : E.getTemperature()}", function(d) {
-        //elements.sensor1.setvalue(d.sensor1);}
-     update();
-     
+      elements.tempAve.setValue(d.tempAve);
      setInterval(function() {
      //update();
       }, 10000);
@@ -32,7 +24,8 @@
   }
   
   function updatePiv() {
-  
+  elementsPiv.pivManual.setValue(pivMan);    
+   elementsPiv.sensorH1.setValue(pivMan);
   }
   
   function update() {
@@ -136,8 +129,6 @@
    function pivPage() {  
  clearHome();
  updatePiv();
- //   UART.eval("pivManual", function(d) {
- //  elementsPiv.pivManual.setValue(d)});
    for (var i in elementsPiv)
      document.body.appendChild(elementsPiv[i]);
    }
@@ -162,16 +153,19 @@
    UART.eval("pivManual", function(t) {
       pivMan = t;});
       setTimeout (function () {
+
+      elementsPiv.pivManual.setValue(pivMan);    
    elementsPiv.sensorH1.setValue(pivMan);},1000);
    }
    
    var page;
    var pivMan;
    var elements = {
- //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice}),
+ 
    heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
    tempAve : TD.value({x:195,y:10,width:175,height:105,label:"Average Temperature",value:""}),
-   humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""})
+   humidityAve : TD.value({x:195,y:125,width:175,height:105,label:"Average Humidity",value:""}),
+   modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice})
    }
  
    //Home Page
@@ -227,7 +221,7 @@
    var elementsPiv = {
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
    heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
-   pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:0,onchange:pivState}),
+   pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:pivMan,onchange:pivState}),
    sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
    sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
    }
@@ -244,11 +238,13 @@
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearEnergy})  
    }
    
-  for (var i in elements)
-    document.body.appendChild(elements[i]);
-  
   for (var i in elementsHome)
     document.body.appendChild(elementsHome[i]);
+    
+for (var i in elements)
+    document.body.appendChild(elements[i]);
+  
+
   
   </script>
  </body>
