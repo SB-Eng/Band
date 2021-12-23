@@ -1,4 +1,3 @@
-
 <html>
  <head>
   <title>Dashboard</title>
@@ -88,73 +87,62 @@
         elements.sensorB7.setValue(d)});
   }
   
-   function clearPage() {
-         
-  elements.humidityAve.setValue(page);
-    
-    if (page != "home") {
+    function clearHome() {
      for (var i in elementsHome)
        document.body.removeChild(elementsHome[i]);
-     }
+   }
 
- else if (page != "rooms") {
-          for (var i in elementsRooms)
-      document.body.removeChild(elementsRooms[i]);
-     }
-     
-     else if (page != "piv") {
-   
+    function clearRooms() {
+     for (var i in elementsRooms)
+       document.body.removeChild(elementsRooms[i]);
+    homePage();
+   }
+ 
+ function clearPiv() {
      for (var i in elementsPiv)
        document.body.removeChild(elementsPiv[i]);
-       }
-       
-      else if (page != "bathroom") {
+    homePage();
+   }
+   
+       function clearBathroom() {
      for (var i in elementsBathroom)
        document.body.removeChild(elementsBathroom[i]);
-       }
-
-       
-     else if (page != "energy") {  
+   homePage();
+   }
+   
+       function clearEnergy() {
      for (var i in elementsEnergy)
        document.body.removeChild(elementsEnergy[i]);
-       }
-       
-   //  for (var i in elements)
-    //   document.body.appendChild(elements[i]);  
-       
-   }  
+    homePage();
+   }
    
  function homePage() {
-   page = "home"
-   clearPage();
+
    for (var i in elementsHome)
      document.body.appendChild(elementsHome[i]);
    }
    
  function roomsPage() {   
-   page = "rooms"
-   clearPage();
+ clearHome();
+
    for (var i in elementsRooms)
      document.body.appendChild(elementsRooms[i]);
    }
    
    function pivPage() {  
-   page = "piv"
-   clearPage();
+ clearHome();
    for (var i in elementsPiv)
      document.body.appendChild(elementsPiv[i]);
    }
    
    function bathroomPage() {   
-   page = "bathroom"
-   clearPage();
+ clearHome();
    for (var i in elementsBathroom)
      document.body.appendChild(elementsBathroom[i]);
    }
    
    function energyPage() {  
-   page = "energy"
-     clearPage();
+ clearHome();
      for (var i in elementsEnergy)
       document.body.appendChild(elementsEnergy[i]);
    }
@@ -175,13 +163,13 @@
    rooms : TD.button({x:40,y:240,width:300,height:90,label:"ROOMS",onchange:roomsPage}),
    pivFan : TD.button({x:40,y:340,width:300,height:90,label:"PIV CONTROL",onchange:pivPage}),
    bathroomFan : TD.button({x:40,y:440,width:300,height:90,label:"BATHROOM FAN",onchange:bathroomPage}),
-   energy : TD.button({x:40,y:540,width:300,height:90,label:"ENERGY",onchange:bathroomPage})
+   energy : TD.button({x:40,y:540,width:300,height:90,label:"ENERGY",onchange:energyPage})
    
    }
    
    //Rooms
    var elementsRooms = {
-   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:homePage}),
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearRooms}),
    heading1 : TD.label({x:10,y:240,width:355,height:35,label:"Loft"}),
    sensorT1: TD.value({x:10,y:280,width:115,height:50,label:"Temperature",value:""}),
    sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
@@ -221,19 +209,19 @@
    //PIV Control
    
    var elementsPiv = {
-   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:homePage}),
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
    }
    
    //Bathroom Fan
    
    var elementsBathroom = {
-   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:homePage})
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearBathroom})
    }
   
    //Energy
    
    var elementsEnergy = {
-   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:homePage})  
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearEnergy})  
    }
    
   for (var i in elements)
