@@ -31,6 +31,10 @@
     });
   }
   
+  function updatePiv() {
+  
+  }
+  
   function update() {
    //UART.eval("tempAve", function(d) {
         //elements.tempAve.setValue(d)});
@@ -131,6 +135,9 @@
    
    function pivPage() {  
  clearHome();
+ updatePiv();
+ //   UART.eval("pivManual", function(d) {
+ //  elementsPiv.pivManual.setValue(d)});
    for (var i in elementsPiv)
      document.body.appendChild(elementsPiv[i]);
    }
@@ -151,10 +158,14 @@
    
    function pivState() {
    UART.write("pivManual = !pivManual;\n");
-   UART.eval("pivManual", function(d) {elementsPiv.pivManual.setValue(d)});
-   }
-   var page;
    
+   UART.eval("pivManual", function(t) {
+      pivManual = t;});
+   elementsPiv.sensorH1.setValue(pivManual);
+   }
+   
+   var page;
+   //var pivManual;
    var elements = {
  //modal : TD.modal({x:10,y:10,width:370,height:600,label:"Click to connect",onchange:connectDevice}),
    heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
