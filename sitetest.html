@@ -29,60 +29,60 @@
  //  elementsPiv.sensorH1.setValue(pivMan);
   }
   
-  function update() {
+  function updateRooms() {
    //UART.eval("tempAve", function(d) {
-        //elements.tempAve.setValue(d)});
-      UART.eval("humidityAve", function(d) {
-        elements.humidityAve.setValue(d)});
+   //     elements.tempAve.setValue(d)});
+   //   UART.eval("humidityAve", function(d) {
+   //     elements.humidityAve.setValue(d)});
       
-     UART.eval("temp[1]", function(d) {
-        elements.sensorT1.setValue(d)});
-     UART.eval("humidity[1]", function(d) {
-        elements.sensorH1.setValue(d)});
-     UART.eval("battery[1]", function(d) {
-        elements.sensorB1.setValue(d)});
+     UART.eval("temp[1]\n", function(d) {
+        elementsRooms.sensorT1.setValue(d)});
+     UART.eval("humidity[1]\n", function(d) {
+        elementsRooms.sensorH1.setValue(d)});
+     UART.eval("battery[1]\n", function(d) {
+        elementsRooms.sensorB1.setValue(d)});
       
-     UART.eval("temp[2]", function(d) {
-        elements.sensorT2.setValue(d)});
-     UART.eval("humidity[2]", function(d) {
-        elements.sensorH2.setValue(d)});
-     UART.eval("battery[2]", function(d) {
-        elements.sensorB2.setValue(d)});
+     UART.eval("temp[2]\n", function(d) {
+        elementsRooms.sensorT2.setValue(d)});
+     UART.eval("humidity[2]\n", function(d) {
+        elementsRooms.sensorH2.setValue(d)});
+     UART.eval("battery[2]\n", function(d) {
+        elementsRooms.sensorB2.setValue(d)});
       
-     UART.eval("temp[3]", function(d) {
-        elements.sensorT3.setValue(d)});
-     UART.eval("humidity[3]", function(d) {
-        elements.sensorH3.setValue(d)});
-     UART.eval("battery[3]", function(d) {
-        elements.sensorB3.setValue(d)});
+     UART.eval("temp[3]\n", function(d) {
+        elementsRooms.sensorT3.setValue(d)});
+     UART.eval("humidity[3]\n", function(d) {
+        elementsRooms.sensorH3.setValue(d)});
+     UART.eval("battery[3]\n", function(d) {
+        elementsRooms.sensorB3.setValue(d)});
       
-     UART.eval("temp[4]", function(d) {
-        elements.sensorT4.setValue(d)});
-     UART.eval("humidity[4]", function(d) {
-        elements.sensorH4.setValue(d)});
-     UART.eval("battery[4]", function(d) {
-        elements.sensorB4.setValue(d)});
+     UART.eval("temp[4]\n", function(d) {
+        elementsRooms.sensorT4.setValue(d)});
+     UART.eval("humidity[4]\n", function(d) {
+        elementsRooms.sensorH4.setValue(d)});
+     UART.eval("battery[4]\n", function(d) {
+        elementsRooms.sensorB4.setValue(d)});
       
-     UART.eval("temp[5]", function(d) {
-        elements.sensorT5.setValue(d)});
-     UART.eval("humidity[5]", function(d) {
-        elements.sensorH5.setValue(d)});
-     UART.eval("battery[5]", function(d) {
-        elements.sensorB5.setValue(d)});
+     UART.eval("temp[5]\n", function(d) {
+        elementsRooms.sensorT5.setValue(d)});
+     UART.eval("humidity[5]\n", function(d) {
+        elementsRooms.sensorH5.setValue(d)});
+     UART.eval("battery[5]\n", function(d) {
+        elementsRooms.sensorB5.setValue(d)});
       
-     UART.eval("temp[6]", function(d) {
-        elements.sensorT6.setValue(d)});
-     UART.eval("humidity[6]", function(d) {
-        elements.sensorH6.setValue(d)});
-     UART.eval("battery[6]", function(d) {
-        elements.sensorB6.setValue(d)});
+     UART.eval("temp[6]\n", function(d) {
+        elementsRooms.sensorT6.setValue(d)});
+     UART.eval("humidity[6]\n", function(d) {
+        elementsRooms.sensorH6.setValue(d)});
+     UART.eval("battery[6]\n", function(d) {
+        elementsRooms.sensorB6.setValue(d)});
  
-     UART.eval("temp[7]", function(d) {
-        elements.sensorT7.setValue(d)});
-     UART.eval("humidity[7]", function(d) {
-        elements.sensorH7.setValue(d)});
-     UART.eval("battery[7]", function(d) {
-        elements.sensorB7.setValue(d)});
+     UART.eval("temp[7]\n", function(d) {
+        elementsRooms.sensorT7.setValue(d)});
+     UART.eval("humidity[7]\n", function(d) {
+        elementsRooms.sensorH7.setValue(d)});
+     UART.eval("battery[7]\n", function(d) {
+        elementsRooms.sensorB7.setValue(d)});
   }
   
     function clearHome() {
@@ -122,9 +122,12 @@
    
  function roomsPage() {   
  clearHome();
-
+   updateRooms();
    for (var i in elementsRooms)
      document.body.appendChild(elementsRooms[i]);
+   setInterval(function() {
+     updateRooms();
+      }, 10000); 
    }
    
    function pivPage() {  
