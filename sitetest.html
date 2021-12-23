@@ -15,6 +15,7 @@
         return;
       }
       UART.eval("pivManual", function(t) {pivMan = t;});
+   //   UART.eval("speedSet", function(t) {pivSpeed = t;});
       elements.modal.remove();
       elements.tempAve.setValue(d.tempAve);
      setInterval(function() {
@@ -25,7 +26,7 @@
   
   function updatePiv() {
   elementsPiv.pivManual.setValue(pivMan);    
-   elementsPiv.sensorH1.setValue(pivMan);
+ //  elementsPiv.sensorH1.setValue(pivMan);
   }
   
   function update() {
@@ -149,17 +150,18 @@
    
    function pivState() {
    UART.write("pivManual = !pivManual;\n");
-   
+   UART.eval("speedSet", function(t) {pivSpeed = t;});
    UART.eval("pivManual", function(t) {
       pivMan = t;});
       setTimeout (function () {
-
+     elementsPiv.pivSetspeed.setValue(pivSpeed);
       elementsPiv.pivManual.setValue(pivMan);    
    elementsPiv.sensorH1.setValue(pivMan);},1000);
    }
    
    var page;
    var pivMan;
+   var pivSpeed;
    var elements = {
  
    heading : TD.label({x:10,y:10,width:170,height:220, label:"Home Automation v1.12"}),
@@ -222,7 +224,7 @@
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
    heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
    pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:pivMan,onchange:pivState}),
-   sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
+   pivSetspeed: TD.value({x:130,y:280,width:115,height:50,label:"Fan Speed",value:""}),
    sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
    }
    
