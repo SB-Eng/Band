@@ -24,11 +24,12 @@
   }
   
   function updatePiv() {
-  UART.eval("speedSet\n", function(t) {pivSpeed = t;});
-   UART.eval("pivManual\n", function(t) {
-      pivMan = t;});
+  UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
+   UART.eval("pivManual\n", function(t) {pivMan = t;});
+   UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
   elementsPiv.pivSetspeed.setValue(pivSpeed);
-  elementsPiv.pivManual.setValue(pivMan);    
+  elementsPiv.pivManSpeed.setValue(pivManSetSpeed);
+ // elementsPiv.pivManual.setValue(pivMan);    
   }
   
   function updateRooms() {
@@ -138,7 +139,7 @@
  clearHome();
  pivUpdate = setInterval (function () {
      updatePiv();     
-      },1000);
+      },10000);
 
    for (var i in elementsPiv)
      document.body.appendChild(elementsPiv[i]);
@@ -159,17 +160,22 @@
    // Set up the controls we see on the screen    
    
    function pivState() {
-   UART.write("pivManual = !pivManual;\n");
-   UART.eval("speedSet", function(t) {pivSpeed = t;});
-   UART.eval("pivManual", function(t) {
-      pivMan = t;});
+   UART.write("pivManual = !pivManual;\n");   
+  UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
+   UART.eval("pivManual\n", function(t) {pivMan = t;});
+   UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
+      setTimeout (function () {  
         elementsPiv.pivSetspeed.setValue(pivSpeed);
-  //elementsPiv.pivManual.setValue(pivMan);  
+        elementsPiv.pivManual.setValue(pivMan); 
+        elementsPiv.pivManSpeed.setValue(pivManSetSpeed);
+        
+        },1000); 
    }
    
    var page;
    var pivMan;
    var pivSpeed;
+   var pivManSetSpeed;
   
   var elements = {
  
@@ -233,8 +239,8 @@
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
    heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
    pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:pivMan,onchange:pivState}),
-   pivSetspeed: TD.value({x:130,y:280,width:115,height:50,label:"Fan Speed",value:""}),
-   sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
+   pivSetspeed: TD.value({x:130,y:280,width:115,height:50,label:"Fan Speed %",value:""}),
+   pivManSpeed: TD.value({x:250,y:280,width:115,height:50,label:"Manual Speed %",value:"", step:10}),
    }
    
    //Bathroom Fan
@@ -260,6 +266,4 @@ for (var i in elements)
   </script>
  </body>
 </html>
-
-
 
