@@ -1,0 +1,295 @@
+<html>
+ <head>
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=420, initial-scale=1">
+ </head>
+ <body style="width:380px;height:450px">
+  <link href="https://espruino.github.io/TinyDash/tinydash.css" rel="stylesheet">
+  <script src="https://espruino.github.io/TinyDash/tinydash.js"></script>
+  <script src="https://www.espruino.com/js/uart.js"></script> 
+  <script>
+  function connectDevice() {
+    UART.eval("{tempAve : tempAve\n}", function(d,err) {
+      if (!d) {
+        alert("Web Bluetooth connection failed!\n"+(err||""));
+        return;
+      }
+     // updateRooms();
+      //updatePiv();
+      elements.modal.remove();
+      elements.tempAve.setValue(d.tempAve);
+     // UART.eval("pivManual\n", function(t) {pivMan = t;});
+       UART.eval("humidityAve\n", function(d) {
+        elements.humidityAve.setValue(d)});
+    });
+  }
+  
+  function updatePiv() {
+  UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
+   UART.eval("pivManual\n", function(t) {pivMan = t;});
+if (pivMan == 0) {
+        pivMode = "AUTO";
+        for (var i in elementsPivManual)
+       document.body.removeChild(elementsPivManual[i]);
+       }
+        else { pivMode = "MANUAL";
+        for (var i in elementsPivManual)
+     document.body.appendChild(elementsPivManual[i]);}
+        elementsPiv.pivModeLabel.setValue(pivMode);
+  elementsPiv.pivSetSpeed.setValue(pivSpeed);
+  elementsPiv.pivManual.setValue(pivMan);    
+  }
+  
+  function updateRooms() {
+   UART.eval("tempAve\n", function(d) {
+        elements.tempAve.setValue(d)});
+      UART.eval("humidityAve\n", function(d) {
+        elements.humidityAve.setValue(d)});
+      
+     UART.eval("temp[1]\n", function(d) {
+        elementsRooms.sensorT1.setValue(d)});
+     UART.eval("humidity[1]\n", function(d) {
+        elementsRooms.sensorH1.setValue(d)});
+     UART.eval("battery[1]\n", function(d) {
+        elementsRooms.sensorB1.setValue(d)});
+      
+     UART.eval("temp[2]\n", function(d) {
+        elementsRooms.sensorT2.setValue(d)});
+     UART.eval("humidity[2]\n", function(d) {
+        elementsRooms.sensorH2.setValue(d)});
+     UART.eval("battery[2]\n", function(d) {
+        elementsRooms.sensorB2.setValue(d)});
+      
+     UART.eval("temp[3]\n", function(d) {
+        elementsRooms.sensorT3.setValue(d)});
+     UART.eval("humidity[3]\n", function(d) {
+        elementsRooms.sensorH3.setValue(d)});
+     UART.eval("battery[3]\n", function(d) {
+        elementsRooms.sensorB3.setValue(d)});
+      
+     UART.eval("temp[4]\n", function(d) {
+        elementsRooms.sensorT4.setValue(d)});
+     UART.eval("humidity[4]\n", function(d) {
+        elementsRooms.sensorH4.setValue(d)});
+     UART.eval("battery[4]\n", function(d) {
+        elementsRooms.sensorB4.setValue(d)});
+      
+     UART.eval("temp[5]\n", function(d) {
+        elementsRooms.sensorT5.setValue(d)});
+     UART.eval("humidity[5]\n", function(d) {
+        elementsRooms.sensorH5.setValue(d)});
+     UART.eval("battery[5]\n", function(d) {
+        elementsRooms.sensorB5.setValue(d)});
+      
+     UART.eval("temp[6]\n", function(d) {
+        elementsRooms.sensorT6.setValue(d)});
+     UART.eval("humidity[6]\n", function(d) {
+        elementsRooms.sensorH6.setValue(d)});
+     UART.eval("battery[6]\n", function(d) {
+        elementsRooms.sensorB6.setValue(d)});
+ 
+     UART.eval("temp[7]\n", function(d) {
+        elementsRooms.sensorT7.setValue(d)});
+     UART.eval("humidity[7]\n", function(d) {
+        elementsRooms.sensorH7.setValue(d)});
+     UART.eval("battery[7]\n", function(d) {
+        elementsRooms.sensorB7.setValue(d)});
+  }
+  
+    function clearHome() {
+     for (var i in elementsHome)
+       document.body.removeChild(elementsHome[i]);
+   }
+
+    function clearRooms() {
+    clearInterval(roomsUpdate);
+     for (var i in elementsRooms)
+       document.body.removeChild(elementsRooms[i]);
+    homePage();
+   }
+ 
+ function clearPiv() {
+ clearInterval(pivUpdate);
+ if (pivMode == "MANUAL") { 
+ for (var i in elementsPivManual)
+       document.body.removeChild(elementsPivManual[i]);}
+     for (var i in elementsPiv)
+       document.body.removeChild(elementsPiv[i]);
+    homePage();
+   }
+   
+       function clearBathroom() {
+     for (var i in elementsBathroom)
+       document.body.removeChild(elementsBathroom[i]);
+   homePage();
+   }
+   
+       function clearEnergy() {
+     for (var i in elementsEnergy)
+       document.body.removeChild(elementsEnergy[i]);
+    homePage();
+   }
+   
+ function homePage() {
+
+   for (var i in elementsHome)
+     document.body.appendChild(elementsHome[i]);
+   }
+   
+ function roomsPage() {   
+ clearHome();
+   for (var i in elementsRooms)
+     document.body.appendChild(elementsRooms[i]);
+   roomsUpdate = setInterval(function() {
+     updateRooms();
+      }, 10000); 
+      updateRooms();
+   }
+   
+   function pivPage() {  
+ clearHome();
+   for (var i in elementsPiv)
+     document.body.appendChild(elementsPiv[i]);
+   
+updatePiv();
+ pivUpdate = setInterval (function () {
+     updatePiv();     
+      },10000);
+}
+
+   
+   function bathroomPage() {   
+ clearHome();
+   for (var i in elementsBathroom)
+     document.body.appendChild(elementsBathroom[i]);
+   }
+   
+   function energyPage() {  
+ clearHome();
+     for (var i in elementsEnergy)
+      document.body.appendChild(elementsEnergy[i]);
+   }
+   
+   // Set up the controls we see on the screen    
+   
+   function pivState() {
+   UART.write("pivManual = !pivManual;\n");   
+  UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
+   UART.eval("pivManual\n", function(t) {pivMan = t;});
+
+      setTimeout (function () {  
+        elementsPiv.pivSetSpeed.setValue(pivSpeed);
+        elementsPiv.pivManual.setValue(pivMan); 
+        if (pivMan == 0) {
+        pivMode = "AUTO";}
+        else { pivMode = "MANUAL";}
+        elementsPiv.pivModeLabel.setValue(pivMode);
+        },1000); 
+   }
+   
+   var page;
+   var pivMan;
+   var pivSpeed;
+   var pivManSetSpeed;
+   var pivMode = "AUTO";
+  
+  var elements = {
+ 
+   heading : TD.label({x:10,y:10,width:175,height:220, label:"Home Automation v1.12"}),
+   tempAve : TD.value({x:195,y:10,width:170,height:105,label:"Average Temperature",value:""}),
+   humidityAve : TD.value({x:195,y:125,width:170,height:105,label:"Average Humidity",value:""}),
+   modal : TD.modal({x:10,y:10,width:360,height:440,label:"Click to connect",onchange:connectDevice})
+   }
+ 
+   //Home Page
+   var elementsHome = {
+   rooms : TD.button({x:10,y:240,width:355,height:90,label:"ROOMS",onchange:roomsPage}),
+   pivFan : TD.button({x:10,y:340,width:355,height:90,label:"PIV CONTROL",onchange:pivPage}),
+  // bathroomFan : TD.button({x:40,y:440,width:360,height:90,label:"BATHROOM FAN",onchange:bathroomPage}),
+ //  energy : TD.button({x:40,y:540,width:360,height:90,label:"ENERGY",onchange:energyPage})
+   
+   }
+   
+   //Rooms
+   var elementsRooms = {
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearRooms}),
+   heading1 : TD.label({x:10,y:240,width:355,height:35,label:"Loft"}),
+   sensorT1: TD.value({x:10,y:280,width:115,height:50,label:"Temperature",value:""}),
+   sensorH1: TD.value({x:130,y:280,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB1: TD.value({x:250,y:280,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading2 : TD.label({x:10,y:340,width:355,height:35,label:"Hallway"}),
+   sensorT2: TD.value({x:10,y:380,width:115,height:50,label:"Temperature",value:""}),
+   sensorH2: TD.value({x:130,y:380,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB2: TD.value({x:250,y:380,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading3 : TD.label({x:10,y:440,width:355,height:35,label:"Bathroom"}),
+   sensorT3: TD.value({x:10,y:480,width:115,height:50,label:"Temperature",value:""}),
+   sensorH3: TD.value({x:130,y:480,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB3: TD.value({x:250,y:480,width:115,height:50,label:"Battery %",value:""}),
+
+   heading4 : TD.label({x:10,y:540,width:355,height:35,label:"Main Bedroom"}),
+   sensorT4: TD.value({x:10,y:580,width:115,height:50,label:"Temperature",value:""}),
+   sensorH4: TD.value({x:130,y:580,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB4: TD.value({x:250,y:580,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading5 : TD.label({x:10,y:640,width:355,height:35,label:"Kid's Room"}),
+   sensorT5: TD.value({x:10,y:680,width:115,height:50,label:"Temperature",value:""}),
+   sensorH5: TD.value({x:130,y:680,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB5: TD.value({x:250,y:680,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading6 : TD.label({x:10,y:740,width:355,height:35,label:"Kitchen"}),
+   sensorT6: TD.value({x:10,y:780,width:115,height:50,label:"Temperature",value:""}),
+   sensorH6: TD.value({x:130,y:780,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB6: TD.value({x:250,y:780,width:115,height:50,label:"Battery %",value:""}),
+   
+   heading7 : TD.label({x:10,y:840,width:355,height:35,label:"Jayden's Room"}),
+   sensorT7: TD.value({x:10,y:880,width:115,height:50,label:"Temperature",value:""}),
+   sensorH7: TD.value({x:130,y:880,width:115,height:50,label:"Humidity %",value:""}),
+   sensorB7: TD.value({x:250,y:880,width:115,height:50,label:"Battery %",value:""})
+   }
+ 
+   //PIV Control
+   
+   var elementsPiv = {
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
+   heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
+   pivModeLabel : TD.value({x:195,y:228,width:170,height:1,label:"",value:""}),
+   pivManual: TD.toggle({x:10,y:280,width:175,height:60,label:"Auto / Manual",value:pivMan,onchange:pivState}),
+      pivSetSpeed: TD.value({x:195,y:280,width:170,height:60,label:"Fan Speed %",value:""})
+   }
+   
+   var elementsPivManual = {
+   heading1 : TD.label({x:10,y:350,width:355,height:35,label:"MANUAL SETPOINT"}),
+   pivOff : TD.button({x:10,y:580,width:355,height:90,label:"OFF",onchange:function(){UART.write("pivManSpeed = 1000;\n");}}),
+   piv20 : TD.button({x:10,y:390,width:115,height:90,label:"20%",onchange:function(){UART.write("pivManSpeed = 250;\n");}}),
+   piv30 : TD.button({x:130,y:390,width:115,height:90,label:"30%",onchange:function(){UART.write("pivManSpeed = 200;\n");}}),
+   piv40 : TD.button({x:250,y:390,width:115,height:90,label:"40%",onchange:function(){UART.write("pivManSpeed = 150;\n");}}),
+   piv60 : TD.button({x:10,y:485,width:115,height:90,label:"60%",onchange:function(){UART.write("pivManSpeed = 100;\n");}}),
+   piv80 : TD.button({x:130,y:485,width:115,height:90,label:"80%",onchange:function(){UART.write("pivManSpeed = 50;\n");}}),
+   piv100 : TD.button({x:250,y:485,width:115,height:90,label:"100%",onchange:function(){UART.write("pivManSpeed = 0;\n");}}),
+   }
+   
+   //Bathroom Fan
+   
+   var elementsBathroom = {
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearBathroom})
+   }
+  
+   //Energy
+   
+   var elementsEnergy = {
+   home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearEnergy})  
+   }
+   
+  for (var i in elementsHome)
+    document.body.appendChild(elementsHome[i]);
+    
+for (var i in elements)
+    document.body.appendChild(elements[i]);
+  
+
+  
+  </script>
+ </body>
+</html>
