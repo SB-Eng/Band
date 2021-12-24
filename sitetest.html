@@ -14,8 +14,8 @@
         alert("Web Bluetooth connection failed!\n"+(err||""));
         return;
       }
-      UART.eval("pivManual\n", function(t) {pivMan = t;});
-   //   UART.eval("speedSet", function(t) {pivSpeed = t;});
+      updateRooms();
+      updatePiv();
       elements.modal.remove();
       elements.tempAve.setValue(d.tempAve);
        UART.eval("humidityAve\n", function(d) {
@@ -26,10 +26,11 @@
   function updatePiv() {
   UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
    UART.eval("pivManual\n", function(t) {pivMan = t;});
-   UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
-  elementsPiv.pivSetspeed.setValue(pivSpeed);
-  elementsPiv.pivManSpeed.setValue(pivManSetSpeed);
- // elementsPiv.pivManual.setValue(pivMan);    
+  // UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
+  elementsPiv.pivSetSpeed.setValue(pivSpeed);
+  
+//  elementsPiv.pivManSpeed.setValue(pivManSetSpeed);
+  elementsPiv.pivManual.setValue(pivMan);    
   }
   
   function updateRooms() {
@@ -137,6 +138,7 @@
    
    function pivPage() {  
  clearHome();
+ updatePiv();
  pivUpdate = setInterval (function () {
      updatePiv();     
       },10000);
@@ -163,9 +165,9 @@
    UART.write("pivManual = !pivManual;\n");   
   UART.eval("speedPercentage\n", function(t) {pivSpeed = t;});
    UART.eval("pivManual\n", function(t) {pivMan = t;});
-   UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
+   //UART.eval("manualSpeed\n", function(t) {pivManSetSpeed = t;});
       setTimeout (function () {  
-        elementsPiv.pivSetspeed.setValue(pivSpeed);
+        elementsPiv.pivSetSpeed.setValue(pivSpeed);
         elementsPiv.pivManual.setValue(pivMan); 
         //elementsPiv.pivManSpeed.setValue(pivManSetSpeed);
         
@@ -238,9 +240,14 @@
    var elementsPiv = {
    home : TD.button({x:10,y:140,width:170,height:90,label:"HOME",onchange:clearPiv}),
    heading1 : TD.label({x:10,y:240,width:355,height:35,label:"PIV CONTROL"}),
-   pivManual: TD.toggle({x:10,y:280,width:115,height:50,label:"Temperature",value:pivMan,onchange:pivState}),
-   pivSetspeed: TD.value({x:130,y:280,width:115,height:50,label:"Fan Speed %",value:""}),
-   pivManSpeed: TD.value({x:250,y:280,width:115,height:50,label:"Manual Speed %",value:"", step:10}),
+   pivManual: TD.toggle({x:10,y:280,width:115,height:100,label:"Temperature",value:pivMan,onchange:pivState}),
+   pivSetSpeed: TD.value({x:130,y:280,width:115,height:100,label:"Fan Speed %",value:""}),
+   piv20 : TD.button({x:40,y:390,width:100,height:90,label:"20%",onchange:function(){UART.write("pivManSpeed = 250;\n");}}),
+   piv30 : TD.button({x:40,y:490,width:300,height:90,label:"30%",onchange:function(){UART.write("pivManSpeed = 200;\n");}}),
+   piv40 : TD.button({x:40,y:590,width:300,height:90,label:"40%",onchange:function(){UART.write("pivManSpeed = 150;\n");}}),
+   piv60 : TD.button({x:40,y:690,width:300,height:90,label:"60%",onchange:function(){UART.write("pivManSpeed = 100;\n");}}),
+   piv80 : TD.button({x:40,y:790,width:300,height:90,label:"80%",onchange:function(){UART.write("pivManSpeed = 50;\n");}}),
+   piv100 : TD.button({x:40,y:890,width:300,height:90,label:"100%",onchange:function(){UART.write("pivManSpeed = 0;\n");}})
    }
    
    //Bathroom Fan
@@ -266,3 +273,4 @@ for (var i in elements)
   </script>
  </body>
 </html>
+
